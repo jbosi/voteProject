@@ -17,6 +17,7 @@ import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
+import BackgroundImage from '../Images/VoteImageBackground.jpg';
 
 function MadeWithLove() {
   return (
@@ -50,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://source.unsplash.com/user/erondu)',
+    backgroundImage: 'url(' + BackgroundImage + ')',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -177,7 +178,7 @@ export default function Layout() {
             {
               <img
                 style={{ display: 'none' }}
-                src="https://source.unsplash.com/user/erondu"
+                src={BackgroundImage}
                 alt="background"
               />
             }
@@ -186,7 +187,7 @@ export default function Layout() {
               <Grid item md={6}>
                 <div className={classes.mainFeaturedPostContent}>
                   <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-                    Title of a longer featured blog post
+                    Vote
                   </Typography>
                   <Typography variant="h5" color="inherit" paragraph>
                     Multiple lines of text that form the lede, informing new readers quickly and
@@ -202,8 +203,8 @@ export default function Layout() {
           {/* End main featured post */}
           {/* Sub featured posts */}
           <Grid container spacing={4} className={classes.cardGrid}>
-                  <Cards>
-                  </Cards>
+            <Cards>
+            </Cards>
           </Grid>
           {/* End sub featured posts */}
           <Grid container spacing={5} className={classes.mainGrid}>

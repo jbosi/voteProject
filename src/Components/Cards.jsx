@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -6,24 +6,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
-
-const fetchParlementaires = (thisApp) => {
-  fetch('https://www.nosdeputes.fr/deputes/enmandat/json')
-  .then(result=>result.json())
-  .then(result=> {
-      thisApp.setState({
-          isLoaded: true,
-          items: result.deputes
-      });
-  },
-  (error) => {
-      thisApp.setState({
-          isLoaded: true,
-          error
-      });
-    }
-  )
-};
 
 // const fetchDetailedInfo = (thisApp, slug) => {
 //   fetch('https://www.nosdeputes.fr/' + slug + '/json')
@@ -42,7 +24,7 @@ const fetchParlementaires = (thisApp) => {
 //     }
 //   )
 // };
-const useStyles = makeStyles({
+const classes =  {
   card: {
     display: 'flex',
   },
@@ -52,26 +34,31 @@ const useStyles = makeStyles({
   cardMedia: {
     width: 160,
   },
-});
+};
 
-class Cards extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-          error: null,
-          isLoaded: false,
-          items: [],
-          // detailedInfo: [],
-      };
-  }
+function Cards() {
   
-  componentDidMount () {
-      fetchParlementaires(this);
-  }
+  useEffect(() => {
+      fetchParlementaires();
+  });
 
-  render() {
-    const { items, isLoaded/*, detailedInfo */} = this.state;
-    const classes = useStyles();
+  const fetchParlementaires = () => {
+    fetch('https://www.nosdeputes.fr/deputes/enmandat/json')
+    .then(result=>result.json())
+    .then(result=> {
+      setIsLoaded(true);
+      setItems(result.deputes);
+    },
+    (error) => {
+        setIsLoaded(true);
+        setError(error);
+      }
+    )
+  };
+
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState([]);
+  const [error, setError] = useState(null);
 
     return (
       <Fragment>
@@ -106,6 +93,5 @@ class Cards extends Component {
       </Fragment>
     )
   }
-}
 
 export default Cards;

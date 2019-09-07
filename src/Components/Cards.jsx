@@ -24,7 +24,20 @@ import Grid from '@material-ui/core/Grid';
 //     }
 //   )
 // };
-const classes =  {
+
+// const classes =  {
+//   card: {
+//     display: 'flex',
+//   },
+//   cardDetails: {
+//     flex: 1,
+//   },
+//   cardMedia: {
+//     width: 160,
+//   },
+// };
+
+const useStyles = makeStyles(theme => ({
   card: {
     display: 'flex',
   },
@@ -34,10 +47,11 @@ const classes =  {
   cardMedia: {
     width: 160,
   },
-};
+}));
 
-function Cards() {
-  
+export default function Cards({departement}) {
+  const classes = useStyles();  
+
   useEffect(() => {
       fetchParlementaires();
   });
@@ -61,8 +75,9 @@ function Cards() {
   const [error, setError] = useState(null);
 
     return (
-      <Fragment>
-        {items.map(person => {
+      <Grid container spacing={4} className={classes.cardGrid}>
+        {items.filter(person => person.depute.nom_circo === departement)
+        .map(person => {
           return (
             <Grid item key={person.depute.id} xs={12} md={6}>
               <CardActionArea component="a" href="#">
@@ -90,8 +105,6 @@ function Cards() {
             </Grid>
           )
         })}
-      </Fragment>
+      </Grid>
     )
   }
-
-export default Cards;

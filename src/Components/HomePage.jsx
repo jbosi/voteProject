@@ -14,11 +14,11 @@ import Grid from '@material-ui/core/Grid';
 // import Hidden from '@material-ui/core/Hidden';
 import Link from '@material-ui/core/Link';
 // import Button from '@material-ui/core/Button';
-// import Divider from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
 import BackgroundImage from '../Images/VoteImageBackground.jpg';
 import SelectPlaces from './SelectPlace'
-import ValidateButton from '../Components/ValidateButton'
+// import ValidateButton from '../Components/ValidateButton'
 import DisplayPolitics from '../Components/DisplayPolitics'
 
 const useStyles = makeStyles(theme => ({
@@ -65,6 +65,11 @@ const useStyles = makeStyles(theme => ({
   mainGrid: {
     marginTop: theme.spacing(3),
   },
+  landingGrid: {
+    margin: 'auto',
+    'max-width': '500px',
+
+  },
   card: {
     display: 'flex',
   },
@@ -85,6 +90,10 @@ const useStyles = makeStyles(theme => ({
   sidebarSection: {
     marginTop: theme.spacing(3),
   },
+  sources: {
+    marginTop: theme.spacing(3),    
+    marginBottom: theme.spacing(3),    
+  },
   footer: {
     backgroundColor: theme.palette.background.paper,
     marginTop: theme.spacing(8),
@@ -102,12 +111,12 @@ const social = ['GitHub', 'Twitter', 'Facebook'];
 
 export default function Layout() {
   const classes = useStyles();
-  const [showPolitics, setShowPolitics] = React.useState(null);
+  // const [showPolitics, setShowPolitics] = React.useState(null);
   const [departement, setDepartement] = React.useState(null);
    return (
     <Fragment>
       <CssBaseline />
-      <Container maxWidth="lg">
+      <Container spacing={4} maxWidth="lg">
         <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
           {sections.map(section => (
             <Link
@@ -153,18 +162,20 @@ export default function Layout() {
           </Paper>
           {/* End main featured post */}
           {/* Select autocomplete */}
-          <Grid container spacing={4}>
-            <SelectPlaces
-              setDepartement={setDepartement}
-            />
-            <ValidateButton
+          <Grid item xs={12} sm className={classes.landingGrid}>
+            <Grid item xs container direction="column" spacing={2}>
+              <SelectPlaces
+                setDepartement={setDepartement}
+              />
+            </Grid>
+            {/* <ValidateButton
               setShowPolitics={setShowPolitics}
-            />
+            /> */}
           </Grid>
           {/* Sub featured posts */}
           <Grid container spacing={4}>
             {/* <Cards/> */}
-            {departement && showPolitics && <DisplayPolitics departement={departement}/>}
+            {departement /*&& showPolitics */&& <DisplayPolitics departement={departement}/>}
           </Grid>
           {/* End sub featured posts */}
           <Grid container spacing={5} className={classes.mainGrid}>
@@ -199,9 +210,13 @@ export default function Layout() {
             {network}
           </Link>
         ))}
+        <Divider className={classes.sources}/>
+        <Typography>
+        Sources : NosDéputés.fr / NosSénateurs.fr
+        </Typography>
         </Container>
       </footer>
       {/* End footer */}
     </Fragment>
 );
-              }
+}

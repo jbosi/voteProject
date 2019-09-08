@@ -8,7 +8,7 @@ export default function SelectPlaces() {
     geocodeByAddress(address)
     .then(results => getLatLng(results[0]))
     .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error));
+    .catch(error => console.error('Error', error));
   };
 
   function handleChange(address) {

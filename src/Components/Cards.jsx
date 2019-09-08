@@ -91,7 +91,7 @@ export default function Cards({departement}) {
                         {person.depute.nom_circo}
                       </Typography>
                       <Typography variant="subtitle1" paragraph>
-                        {person.depute.groupe_sigle}
+                        {person.depute.parti_ratt_financier}
                       </Typography>
                     </CardContent>
                   </div>

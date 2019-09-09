@@ -47,6 +47,9 @@ const useStyles = makeStyles(theme => ({
   cardMedia: {
     width: 160,
   },
+  cardMargins: {
+    margin: '0 0 15px 0',
+  },
 }));
 
 export default function Cards({departement}) {
@@ -91,65 +94,64 @@ export default function Cards({departement}) {
   }, []);
 
     return (
-      <Grid container spacing={4} className={classes.cardGrid}>
-        {deputes.filter(person => person.depute.nom_circo === departement)
-        .map(person => {
-          return (
-            <Grid item key={person.depute.id} xs={12} md={6}>
-              <CardActionArea component="a" href="#">
-                <Card className={classes.card}>
-                  <div className={classes.cardDetails}>
-                    <CardContent>
-                      <Typography component="h2" variant="h5">
-                        {person.depute.nom}
-                      </Typography>
-                      <Typography variant="subtitle1" color="textSecondary">
-                        {person.depute.nom_circo}
-                      </Typography>
-                      <Typography variant="subtitle1" paragraph>
-                        {person.depute.parti_ratt_financier}
-                      </Typography>
-                    </CardContent>
-                  </div>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image= {"https://www.nosdeputes.fr/depute/photo/" + person.depute.slug}
-                    title={person.depute.nom}
-                  />
-                </Card>
-              </CardActionArea>
-            </Grid>
-          )
-        })}
-        {senateurs.filter(person => person.senateur.nom_circo === departement)
-        .map(person => {
-          return (
-            <Grid item key={person.senateur.id} xs={12} md={6}>
-              <CardActionArea component="a" href="#">
-                <Card className={classes.card}>
-                  <div className={classes.cardDetails}>
-                    <CardContent>
-                      <Typography component="h2" variant="h5">
-                        {person.senateur.nom}
-                      </Typography>
-                      <Typography variant="subtitle1" color="textSecondary">
-                        {person.senateur.nom_circo}
-                      </Typography>
-                      <Typography variant="subtitle1" paragraph>
-                        {person.senateur.parti_ratt_financier}
-                      </Typography>
-                    </CardContent>
-                  </div>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image= {"https://www.nossenateurs.fr/senateur/photo/" + person.senateur.slug}
-                    title={person.senateur.nom}
-                  />
-                </Card>
-              </CardActionArea>
-            </Grid>
-          )
-        })}
+      <Grid container spacing={4}>
+        <Grid item xs={6}>
+          {deputes.filter(person => person.depute.nom_circo === departement)
+          .map(person => {
+            return (
+                <CardActionArea component="a" href="#" className={classes.cardMargins}>
+                  <Card className={classes.card}>
+                    <div className={classes.cardDetails}>
+                      <CardContent>
+                        <Typography component="h2" variant="h5">
+                          {person.depute.nom}
+                        </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                          {person.depute.nom_circo}
+                        </Typography>
+                        <Typography variant="subtitle1" paragraph>
+                          {person.depute.parti_ratt_financier}
+                        </Typography>
+                      </CardContent>
+                    </div>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image= {"https://www.nosdeputes.fr/depute/photo/" + person.depute.slug}
+                      title={person.depute.nom}
+                    />
+                  </Card>
+                </CardActionArea>
+            )
+          })}
+          {senateurs.filter(person => person.senateur.nom_circo === departement)
+          .map(person => {
+            return (
+                <CardActionArea component="a" href="#" className={classes.cardMargins}>
+                  <Card className={classes.card}>
+                    <div className={classes.cardDetails}>
+                      <CardContent>
+                        <Typography component="h2" variant="h5">
+                          {person.senateur.nom}
+                        </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                          {person.senateur.nom_circo}
+                        </Typography>
+                        <Typography variant="subtitle1" paragraph>
+                          {person.senateur.parti_ratt_financier}
+                        </Typography>
+                      </CardContent>
+                    </div>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image= {"https://www.nossenateurs.fr/senateur/photo/" + person.senateur.slug}
+                      title={person.senateur.nom}
+                    />
+                  </Card>
+                </CardActionArea>
+            )
+          })}
+        </Grid>
+        <Grid item/>
       </Grid>
     )
   }

@@ -52,16 +52,26 @@ const useStyles = makeStyles(theme => ({
 export default function Cards({departement}) {
   const classes = useStyles();  
 
-  useEffect(() => {
-      fetchParlementaires();
-  });
-
-  const fetchParlementaires = () => {
+  const fetchDeputes = () => {
     fetch('https://www.nosdeputes.fr/deputes/enmandat/json')
     .then(result=>result.json())
     .then(result=> {
       setIsLoaded(true);
-      setItems(result.deputes);
+      setDeputes(result.deputes);
+    },
+    (error) => {
+        setIsLoaded(true);
+        setError(error);
+      }
+    )
+  };
+
+  const fetchSenateurs = () => {
+    fetch('https://www.nossenateurs.fr/senateurs/enmandat/json')
+    .then(result=>result.json())
+    .then(result=> {
+      setIsLoaded(true);
+      setSenateurs(result.senateurs);
     },
     (error) => {
         setIsLoaded(true);
@@ -71,12 +81,18 @@ export default function Cards({departement}) {
   };
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [deputes, setDeputes] = useState([]);
+  const [senateurs, setSenateurs] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchDeputes();
+    fetchSenateurs();
+  }, []);
 
     return (
       <Grid container spacing={4} className={classes.cardGrid}>
-        {items.filter(person => person.depute.nom_circo === departement)
+        {deputes.filter(person => person.depute.nom_circo === departement)
         .map(person => {
           return (
             <Grid item key={person.depute.id} xs={12} md={6}>
@@ -99,6 +115,35 @@ export default function Cards({departement}) {
                     className={classes.cardMedia}
                     image= {"https://www.nosdeputes.fr/depute/photo/" + person.depute.slug}
                     title={person.depute.nom}
+                  />
+                </Card>
+              </CardActionArea>
+            </Grid>
+          )
+        })}
+        {senateurs.filter(person => person.senateur.nom_circo === departement)
+        .map(person => {
+          return (
+            <Grid item key={person.senateur.id} xs={12} md={6}>
+              <CardActionArea component="a" href="#">
+                <Card className={classes.card}>
+                  <div className={classes.cardDetails}>
+                    <CardContent>
+                      <Typography component="h2" variant="h5">
+                        {person.senateur.nom}
+                      </Typography>
+                      <Typography variant="subtitle1" color="textSecondary">
+                        {person.senateur.nom_circo}
+                      </Typography>
+                      <Typography variant="subtitle1" paragraph>
+                        {person.senateur.parti_ratt_financier}
+                      </Typography>
+                    </CardContent>
+                  </div>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image= {"https://www.nossenateurs.fr/senateur/photo/" + person.senateur.slug}
+                    title={person.senateur.nom}
                   />
                 </Card>
               </CardActionArea>

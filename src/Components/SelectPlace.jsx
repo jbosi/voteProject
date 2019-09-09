@@ -288,7 +288,7 @@ export default function IntegrationReactSelect({setDepartement}) {
   
   useEffect(() => {
     fetchDepartements();
-  });
+  }, []);
 
   const fetchDepartements = () => {
     fetch('https://geo.api.gouv.fr/departements?fields=nom')

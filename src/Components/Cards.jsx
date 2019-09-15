@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -6,36 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
-
-// const fetchDetailedInfo = (thisApp, slug) => {
-//   fetch('https://www.nosdeputes.fr/' + slug + '/json')
-//   .then(result=>result.json())
-//   .then(result=> {
-//       thisApp.setState({
-//           isLoaded: true,
-//           detailedInfo: result
-//       });
-//   },
-//   (error) => {
-//       thisApp.setState({
-//           isLoaded: true,
-//           error
-//       });
-//     }
-//   )
-// };
-
-// const classes =  {
-//   card: {
-//     display: 'flex',
-//   },
-//   cardDetails: {
-//     flex: 1,
-//   },
-//   cardMedia: {
-//     width: 160,
-//   },
-// };
+// import ActivityCharts from './ActivityCharts'
+import Chart from 'chart.js';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -52,106 +24,95 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Cards({departement}) {
+function drawChat(div, dataset) {
+  let data = {
+    data: [{
+      data: dataset
+    }],
+  }
+  let options = {};
+  let myChart = new Chart(div, {
+    type: 'doughnut',
+    data: data,
+    options: options
+  });
+}
+
+useEffect(() => {
+  
+}, []);
+
+export default function Cards({politics}) {
   const classes = useStyles();  
-
-  const fetchDeputes = () => {
-    fetch('https://www.nosdeputes.fr/deputes/enmandat/json')
-    .then(result=>result.json())
-    .then(result=> {
-      setIsLoaded(true);
-      setDeputes(result.deputes);
-    },
-    (error) => {
-        setIsLoaded(true);
-        setError(error);
-      }
-    )
-  };
-
-  const fetchSenateurs = () => {
-    fetch('https://www.nossenateurs.fr/senateurs/enmandat/json')
-    .then(result=>result.json())
-    .then(result=> {
-      setIsLoaded(true);
-      setSenateurs(result.senateurs);
-    },
-    (error) => {
-        setIsLoaded(true);
-        setError(error);
-      }
-    )
-  };
-
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [deputes, setDeputes] = useState([]);
-  const [senateurs, setSenateurs] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetchDeputes();
-    fetchSenateurs();
-  }, []);
 
     return (
       <Grid container spacing={4}>
-        <Grid item xs={6}>
-          {deputes.filter(person => person.depute.nom_circo === departement)
-          .map(person => {
+          {politics.deputes.map(politician => {
             return (
-                <CardActionArea component="a" href="#" className={classes.cardMargins}>
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
-                        <Typography component="h2" variant="h5">
-                          {person.depute.nom}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                          {person.depute.nom_circo}
-                        </Typography>
-                        <Typography variant="subtitle1" paragraph>
-                          {person.depute.parti_ratt_financier}
-                        </Typography>
-                      </CardContent>
-                    </div>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image= {"https://www.nosdeputes.fr/depute/photo/" + person.depute.slug}
-                      title={person.depute.nom}
-                    />
-                  </Card>
-                </CardActionArea>
+              <Fragment>
+                <Grid item xs={6}>
+                  <CardActionArea component="a" href="#" className={classes.cardMargins}>
+                    <Card className={classes.card}>
+                      <div className={classes.cardDetails}>
+                        <CardContent>
+                          <Typography component="h2" variant="h5">
+                            {politician.depute.nom}
+                          </Typography>
+                          <Typography variant="subtitle1" color="textSecondary">
+                            {politician.depute.nom_circo}
+                          </Typography>
+                          <Typography variant="subtitle1" paragraph>
+                            {politician.depute.parti_ratt_financier}
+                          </Typography>
+                        </CardContent>
+                      </div>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image= {"https://www.nosdeputes.fr/depute/photo/" + politician.depute.slug}
+                        title={politician.depute.nom}
+                      />
+                    </Card>
+                  </CardActionArea>
+                </Grid>
+                <Grid item xs={6}>
+                  {/* <ActivityCharts politician={politician.depute}/> */}
+                </Grid>
+              </Fragment>
             )
           })}
-          {senateurs.filter(person => person.senateur.nom_circo === departement)
-          .map(person => {
+          {politics.senateurs.map(politician => {
             return (
-                <CardActionArea component="a" href="#" className={classes.cardMargins}>
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
-                        <Typography component="h2" variant="h5">
-                          {person.senateur.nom}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                          {person.senateur.nom_circo}
-                        </Typography>
-                        <Typography variant="subtitle1" paragraph>
-                          {person.senateur.parti_ratt_financier}
-                        </Typography>
-                      </CardContent>
-                    </div>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image= {"https://www.nossenateurs.fr/senateur/photo/" + person.senateur.slug}
-                      title={person.senateur.nom}
-                    />
-                  </Card>
-                </CardActionArea>
+              <Fragment>
+                <Grid item xs={6}>              
+                  <CardActionArea component="a" href="#" className={classes.cardMargins}>
+                    <Card className={classes.card}>
+                      <div className={classes.cardDetails}>
+                        <CardContent>
+                          <Typography component="h2" variant="h5">
+                            {politician.senateur.nom}
+                          </Typography>
+                          <Typography variant="subtitle1" color="textSecondary">
+                            {politician.senateur.nom_circo}
+                          </Typography>
+                          <Typography variant="subtitle1" paragraph>
+                            {politician.senateur.parti_ratt_financier}
+                          </Typography>
+                        </CardContent>
+                      </div>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image= {"https://www.nossenateurs.fr/senateur/photo/" + politician.senateur.slug}
+                        title={politician.senateur.nom}
+                      />
+                    </Card>
+                  </CardActionArea>
+                </Grid>
+                <Grid item xs={6}>
+                  {/* <ActivityCharts politician={politician.senateur}/> */}
+                </Grid>
+              </Fragment>
             )
           })}
-        </Grid>
-        <Grid item/>
       </Grid>
     )
   }

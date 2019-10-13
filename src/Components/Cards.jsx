@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
-// import ActivityCharts from './ActivityCharts'
+import ActivityChart from './ActivityChart'
 import Chart from 'chart.js';
 
 const useStyles = makeStyles(theme => ({
@@ -24,32 +24,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function drawChat(div, dataset) {
-  let data = {
-    data: [{
-      data: dataset
-    }],
-  }
-  let options = {};
-  let myChart = new Chart(div, {
-    type: 'doughnut',
-    data: data,
-    options: options
-  });
-}
+// function drawChart(div, dataset) {
+//   let data = {
+//     data: [{
+//       data: dataset
+//     }],
+//   }
+//   let options = {};
+//   let myChart = new Chart(div, {
+//     type: 'doughnut',
+//     data: data,
+//     options: options
+//   });
+// }
 
-useEffect(() => {
-  
-}, []);
 
 export default function Cards({politics}) {
-  const classes = useStyles();  
+  const classes = useStyles();
 
+  // useEffect(() => {
+  //   drawChart
+  // }, []);
+  
     return (
       <Grid container spacing={4}>
           {politics.deputes.map(politician => {
             return (
-              <Fragment>
+              <Fragment key={politician.depute.slug}>
                 <Grid item xs={6}>
                   <CardActionArea component="a" href="#" className={classes.cardMargins}>
                     <Card className={classes.card}>
@@ -75,14 +76,14 @@ export default function Cards({politics}) {
                   </CardActionArea>
                 </Grid>
                 <Grid item xs={6}>
-                  {/* <ActivityCharts politician={politician.depute}/> */}
+                  <ActivityChart politician={politician.depute}/>
                 </Grid>
               </Fragment>
             )
           })}
           {politics.senateurs.map(politician => {
             return (
-              <Fragment>
+              <Fragment key={politician.senateur.slug}>
                 <Grid item xs={6}>              
                   <CardActionArea component="a" href="#" className={classes.cardMargins}>
                     <Card className={classes.card}>

@@ -4,46 +4,52 @@ import {Doughnut} from 'react-chartjs-2';
 
 
 const useStyles = makeStyles(theme => ({
-  card: {
-    display: 'flex',
-  },
-  cardDetails: {
-    flex: 1,
-  },
-  cardMedia: {
-    width: 160,
-  },
+  // chartSize: {
+  //   width: 160,
+  // },
   cardMargins: {
     margin: '0 0 15px 0',
   },
 }));
 
 
-export default function ActivityChart({politician}) {
+export default function ActivityChart({politician, participation}) {
+  const classes = useStyles();
+
   const data = {
       labels: [
-        'Red',
-        'Green',
-        'Yellow'
+        'Présence',
+        'Absence'
       ],
       datasets: [{
-        data: [10, 20, 50],
+        data: [participation[0] ? participation[0].depute.semaines_presence : 0, participation[0] ? 42 - participation[0].depute.semaines_presence : 42],
         backgroundColor: [
           '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
+          'rgba(0,0,0,0)',
           ],
           hoverBackgroundColor: [
           '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
+          '#DDDDDD',
         ]
       }]
   }
   
     return (
-      <div id={'test'}>
-          <Doughnut data={data}/>
+      <div>
+          <Doughnut data={data} height={90}/>
+          <div>
+            <span>Nombre de Mandats :</span>
+            <span>{participation[0] ? participation[0].depute.nb_mandats : 0}</span>
+          </div>
+          <div>
+            <span>Amendements signés :</span>
+            <span>{participation[0] ? participation[0].depute.amendements_signes : 0}</span>
+          </div>
+          <div>
+            <span>Interventions dans l'hemicycle :</span>
+            <span>{participation[0] ? participation[0].depute.hemicycle_interventions : 0}</span>
+          </div>
+          
       </div>
     )
   }

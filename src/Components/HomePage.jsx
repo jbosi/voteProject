@@ -116,7 +116,7 @@ export default function Layout() {
    return (
     <Fragment>
       <CssBaseline />
-      <Container spacing={4} maxWidth="lg">
+      <Container spacing={4} maxWidth="xl">
         <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
           {sections.map(section => (
             <Link
@@ -146,16 +146,12 @@ export default function Layout() {
             <Grid container>
               <Grid item md={6}>
                 <div className={classes.mainFeaturedPostContent}>
-                  <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-                    Vote
+                  <Typography component="h2" variant="h3" color="inherit" gutterBottom>
+                    VOTE
                   </Typography>
                   <Typography variant="h5" color="inherit" paragraph>
-                    Multiple lines of text that form the lede, informing new readers quickly and
-                    efficiently about what&apos;s most interesting in this post&apos;s contents.
+                    Vue rapide des politiques ainsi que de leur activité par département
                   </Typography>
-                  <Link variant="subtitle1" href="#">
-                    Continue reading…
-                  </Link>
                 </div>
               </Grid>
             </Grid>
@@ -174,7 +170,6 @@ export default function Layout() {
           </Grid>
           {/* Sub featured posts */}
           <Grid container spacing={4}>
-            {/* <Cards/> */}
             {departement /*&& showPolitics */&& <DisplayPolitics departement={departement}/>}
           </Grid>
           {/* End sub featured posts */}
@@ -183,19 +178,6 @@ export default function Layout() {
             <Grid item xs={12} md={8}>
             </Grid>
             {/* End main content */}
-            {/* Sidebar */}
-            <Grid item xs={12} md={4}>
-              <Paper elevation={0} className={classes.sidebarAboutBox}>
-                <Typography variant="h6" gutterBottom>
-                  About
-                </Typography>
-                <Typography>
-                  Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit
-                  amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
-                </Typography>
-              </Paper>
-            </Grid>
-            {/* End sidebar */}
           </Grid>
         </main>
       </Container>

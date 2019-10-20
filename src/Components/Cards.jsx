@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
-import ActivityChart from './ActivityChart'
 import Chart from 'chart.js';
 
 const useStyles = makeStyles(theme => ({
@@ -39,21 +38,24 @@ const useStyles = makeStyles(theme => ({
 // }
 
 
-export default function Cards({politics}) {
+export default function Cards({politics, onChange}) {
   const classes = useStyles();
-
-  // useEffect(() => {
-  //   drawChart
-  // }, []);
+  const handleChange = (depute) => {
+    onChange(depute);
+  }
   
     return (
       <Grid container spacing={4}>
           {politics.deputes.map(politician => {
             return (
               <Fragment key={politician.depute.slug}>
-                <Grid item xs={6}>
-                  <CardActionArea component="a" href="#" className={classes.cardMargins}>
+                  <CardActionArea component="a" href="#" className={classes.cardMargins} onClick={() => handleChange(politician.depute)}>
                     <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image= {"https://www.nosdeputes.fr/depute/photo/" + politician.depute.slug}
+                        title={politician.depute.nom}
+                      />
                       <div className={classes.cardDetails}>
                         <CardContent>
                           <Typography component="h2" variant="h5">
@@ -67,26 +69,29 @@ export default function Cards({politics}) {
                           </Typography>
                         </CardContent>
                       </div>
-                      <CardMedia
-                        className={classes.cardMedia}
-                        image= {"https://www.nosdeputes.fr/depute/photo/" + politician.depute.slug}
-                        title={politician.depute.nom}
-                      />
                     </Card>
                   </CardActionArea>
-                </Grid>
-                <Grid item xs={6}>
-                  <ActivityChart politician={politician.depute}/>
-                </Grid>
+                {/* <Grid item xs={6}>
+                  {deputeSelected ?
+                    <ActivityChart
+                    politician={politician.depute}
+                    participation={politics.participation.filter(person => person.depute.id === politician.depute.id)
+                    }/>
+                    : null}
+                </Grid> */}
               </Fragment>
             )
           })}
           {politics.senateurs.map(politician => {
             return (
               <Fragment key={politician.senateur.slug}>
-                <Grid item xs={6}>              
                   <CardActionArea component="a" href="#" className={classes.cardMargins}>
                     <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image= {"https://www.nossenateurs.fr/senateur/photo/" + politician.senateur.slug}
+                        title={politician.senateur.nom}
+                      />
                       <div className={classes.cardDetails}>
                         <CardContent>
                           <Typography component="h2" variant="h5">
@@ -100,17 +105,8 @@ export default function Cards({politics}) {
                           </Typography>
                         </CardContent>
                       </div>
-                      <CardMedia
-                        className={classes.cardMedia}
-                        image= {"https://www.nossenateurs.fr/senateur/photo/" + politician.senateur.slug}
-                        title={politician.senateur.nom}
-                      />
                     </Card>
                   </CardActionArea>
-                </Grid>
-                <Grid item xs={6}>
-                  {/* <ActivityCharts politician={politician.senateur}/> */}
-                </Grid>
               </Fragment>
             )
           })}

@@ -1,7 +1,9 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import Cards from './Cards';
 import Grid from '@material-ui/core/Grid';
-import ActivityChart from './ActivityChart'
+import ActivityChart from './ActivityChart';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 // import Grid from '@material-ui/core/Grid';
 
 export default function DisplayPolitics({departement}) {
@@ -65,35 +67,44 @@ export default function DisplayPolitics({departement}) {
     fetchParticipationDeputes();
   }, []);
 
-  // const filterPolitics = (deputes, senateurs) => {
-  //   politics = {
-  //     deputes: deputes.filter(person => person.depute.nom_circo === departement),
-  //     senateurs: senateurs.filter(person => person.senateur.nom_circo === departement)
-  //   }
-  // }
+  const [tabValue, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   
   return (
     <Fragment>
-    {/* {() => filterPolitics(deputes, senateurs)} */}
-      <Grid container xs={6}>
-        <Grid item xs={6}>
-        <Cards
-          politics={{
-            deputes: deputes.filter(person => person.depute.nom_circo === departement),
-            senateurs: senateurs.filter(person => person.senateur.nom_circo === departement),
-            participation: participation,
-          }}
-          onChange={handleClick}
-        />
-        </Grid>
+      <Grid item xs={12}>
+        <Tabs
+          value={tabValue}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab label="Députes" />
+          <Tab label="Sénateurs" />
+        </Tabs>
       </Grid>
       <Grid item xs={6}>
-      {deputeSelected ?
-        <ActivityChart
-        politician={deputeSelected}
-        participation={participation.filter(person => person.depute.id === deputeSelected.id)
-        }/>
-        : null}
+      <Cards
+        politics={{
+          deputes: deputes.filter(person => person.depute.nom_circo === departement),
+          senateurs: senateurs.filter(person => person.senateur.nom_circo === departement),
+          participation: participation,
+        }}
+        onChange={handleClick}
+        tabValue={tabValue}
+      />
+      </Grid>
+      <Grid item xs={6}>
+        {deputeSelected ?
+          <ActivityChart
+          politician={deputeSelected}
+          participation={participation.filter(person => person.depute.id === deputeSelected.id)
+          }/>
+          : null}
       </Grid>
     </Fragment>
   );

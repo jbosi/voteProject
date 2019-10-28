@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 // }
 
 
-export default function Cards({politics, onChange}) {
+export default function Cards({politics, onChange, tabValue }) {
   const classes = useStyles();
   const handleChange = (depute) => {
     onChange(depute);
@@ -46,10 +46,10 @@ export default function Cards({politics, onChange}) {
   
     return (
       <Grid container spacing={4}>
-          {politics.deputes.map(politician => {
+          {tabValue === 0 ? politics.deputes.map(politician => {
             return (
               <Fragment key={politician.depute.slug}>
-                  <CardActionArea component="a" href="#" className={classes.cardMargins} onClick={() => handleChange(politician.depute)}>
+                  <CardActionArea component="a" className={classes.cardMargins} onClick={() => handleChange(politician.depute)}>
                     <Card className={classes.card}>
                       <CardMedia
                         className={classes.cardMedia}
@@ -71,21 +71,13 @@ export default function Cards({politics, onChange}) {
                       </div>
                     </Card>
                   </CardActionArea>
-                {/* <Grid item xs={6}>
-                  {deputeSelected ?
-                    <ActivityChart
-                    politician={politician.depute}
-                    participation={politics.participation.filter(person => person.depute.id === politician.depute.id)
-                    }/>
-                    : null}
-                </Grid> */}
               </Fragment>
             )
-          })}
-          {politics.senateurs.map(politician => {
+          }) : null}
+          {tabValue === 1 ?politics.senateurs.map(politician => {
             return (
               <Fragment key={politician.senateur.slug}>
-                  <CardActionArea component="a" href="#" className={classes.cardMargins}>
+                  <CardActionArea component="a" className={classes.cardMargins}>
                     <Card className={classes.card}>
                       <CardMedia
                         className={classes.cardMedia}
@@ -109,7 +101,7 @@ export default function Cards({politics, onChange}) {
                   </CardActionArea>
               </Fragment>
             )
-          })}
+          }) : null}
       </Grid>
     )
   }

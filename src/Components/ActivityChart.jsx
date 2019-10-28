@@ -24,11 +24,11 @@ export default function ActivityChart({politician, participation}) {
       datasets: [{
         data: [participation[0] ? participation[0].depute.semaines_presence : 0, participation[0] ? 42 - participation[0].depute.semaines_presence : 42],
         backgroundColor: [
-          '#FF6384',
+          '#F69F9C',
           'rgba(0,0,0,0)',
           ],
           hoverBackgroundColor: [
-          '#FF6384',
+          '#ADBCCA',
           '#DDDDDD',
         ]
       }]
@@ -38,15 +38,15 @@ export default function ActivityChart({politician, participation}) {
       <div>
           <Doughnut data={data} height={90}/>
           <div>
-            <span>Nombre de Mandats :</span>
+            <span>Nombre de Mandats : </span>
             <span>{participation[0] ? participation[0].depute.nb_mandats : 0}</span>
           </div>
           <div>
-            <span>Amendements signés :</span>
+            <span>Amendements signés : </span>
             <span>{participation[0] ? participation[0].depute.amendements_signes : 0}</span>
           </div>
           <div>
-            <span>Interventions dans l'hemicycle :</span>
+            <span>Interventions dans l'hemicycle : </span>
             <span>{participation[0] ? participation[0].depute.hemicycle_interventions : 0}</span>
           </div>
           

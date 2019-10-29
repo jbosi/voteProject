@@ -87,7 +87,7 @@ export default function DisplayPolitics({departement}) {
           <Tab label="Sénateurs" />
         </Tabs>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
       <Cards
         politics={{
           deputes: deputes.filter(person => person.depute.nom_circo === departement),
@@ -98,7 +98,7 @@ export default function DisplayPolitics({departement}) {
         tabValue={tabValue}
       />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         {deputeSelected ?
           <ActivityChart
           politician={deputeSelected}

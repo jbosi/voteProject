@@ -15,6 +15,10 @@ import BackgroundImage from '../Images/VoteImageBackground.jpg';
 import SelectPlaces from './SelectPlace'
 import DisplayPolitics from '../Components/DisplayPolitics'
 import theme from './../theme'
+import FacebookIcon from '@material-ui/icons/Facebook';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+
 import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -43,6 +47,19 @@ const useStyles = makeStyles(theme => ({
     // color: '#636363',
     right: '5px',
   },
+  iconsContainer: {
+    display: 'flex',
+    'justify-content': 'space-evenly',
+    width: '300px',
+    margin: 'auto',
+  },
+  iconsSocial: {
+    'font-size': '40px',
+    color: '#6AADEF',
+    '&:hover': {
+      color: '#1F87EE',
+    },
+  },
   backgroundImage: {
     height: 'auto',
     width: '100%',
@@ -54,7 +71,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3),
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(6),
-      paddingRight: 0,
     },
   },
   mainGrid: {
@@ -63,7 +79,6 @@ const useStyles = makeStyles(theme => ({
   landingGrid: {
     margin: 'auto',
     'max-width': '500px',
-
   },
   card: {
     display: 'flex',
@@ -81,8 +96,12 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.body2,
     padding: theme.spacing(3, 0),
   },
-  noPadding: {
-    padding: 0,
+  landingPadding: {
+    'padding-left': '70px',
+    'padding-right': '70px',
+  },
+  rightSection: {
+    backgroundColor: '#F9F9F9',
   },
   sidebarAboutBox: {
     padding: theme.spacing(2),
@@ -145,7 +164,7 @@ export default function Layout() {
    return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <Container spacing={4} maxWidth='xl' className={classes.noPadding}>
+      <Container spacing={4} maxWidth='xl' className={classes.landingPadding}>
         <Toolbar component='nav' variant='regular' disableGutters={true} className={classes.toolbarSecondary}>
           {sections.map(section => (
             <Link
@@ -199,7 +218,7 @@ export default function Layout() {
               />
             {/* </Grid> */}
           </Grid>
-            <Grid item md={6}>
+            <Grid item md={6} className={classes.rightSection}>
               <div className={classes.landingText}>
                 <div className={classes.mainFeaturedPostContent}>
                   <Typography variant='h4' color='inherit' gutterBottom>
@@ -219,11 +238,13 @@ export default function Layout() {
                 </Grid>
               </div>
             </Grid>
+            <Container spacing={4} maxWidth='lg'>
             <Grid item md={12} className={classes.politicsContent}>
               <Grid container spacing={4}>
                 {departement /*&& showPolitics */&& <DisplayPolitics departement={departement}/>}
               </Grid>
             </Grid>
+            </Container>
           </Grid>
         </main>
       </Container>
@@ -233,11 +254,11 @@ export default function Layout() {
         <Typography variant='h6' gutterBottom className={classes.sidebarSection}>
           Social
         </Typography>
-        {social.map(network => (
-          <Link display='block' variant='body1' href='#' key={network}>
-            {network}
-          </Link>
-        ))}
+        <div className={classes.iconsContainer}>
+          <FacebookIcon className={classes.iconsSocial}/>
+          <GitHubIcon className={classes.iconsSocial} href='https://github.com/jbosi'/>
+          <LinkedInIcon className={classes.iconsSocial}/>
+        </div>
         <Divider className={classes.sources}/>
         <Typography>
         Sources : NosDéputés.fr / NosSénateurs.fr

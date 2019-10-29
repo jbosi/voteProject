@@ -4,11 +4,9 @@ import {Doughnut} from 'react-chartjs-2';
 
 
 const useStyles = makeStyles(theme => ({
-  // chartSize: {
-  //   width: 160,
-  // },
-  cardMargins: {
-    margin: '0 0 15px 0',
+  stickyChart: {
+    position: 'sticky',
+    top: '30px',
   },
 }));
 
@@ -35,7 +33,7 @@ export default function ActivityChart({politician, participation}) {
   }
   
     return (
-      <div>
+      <div className={classes.stickyChart}>
           <Doughnut data={data} height={90}/>
           <div>
             <span>Nombre de Mandats : </span>

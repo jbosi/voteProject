@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --red-hue: 360;
   --main-hue: var(--red-hue);
   --nav-bg-color: hsl(var(--main-hue), 50%, 90%);
@@ -8,7 +8,7 @@
   --title-color: hsl(var(--main-hue), 50%, 20%);
   --footer-bg-color: hsl(var(--main-hue), 93%, 88%);
   --button-text-color: hsl(var(--main-hue), 50%, 20%);
-}
+} */
 
 body {
   margin: 0;
